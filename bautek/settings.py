@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import django
-django.setup()
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,11 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'users.User'
+#AUTH_USER_MODEL = 'users.User'
 
 # Application definition
 
-INSTALLED_APPS = {
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +41,6 @@ INSTALLED_APPS = {
     'django.contrib.staticfiles',
     'django_filters',
     'tasker',
-    'user',
 
     # REST FRAMEWORK
     'rest_framework',
@@ -53,7 +51,7 @@ INSTALLED_APPS = {
     'django.contrib.sites',
     'rest_auth.registration',
 
-}
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
