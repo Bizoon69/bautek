@@ -2,25 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-    USERNAME_FIELD = 'name'
-    REQUIRED_FIELDS = ('user',)
-
-    name = models.CharField(max_length=72, unique=True)
-    created = models.DateTimeField(auto_now_add=True)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return unicode(self.id)
-
-
+    pass
 class Task(models.Model):
     name = models.CharField(max_length=500)
     creator = models.ForeignKey(User,
