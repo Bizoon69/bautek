@@ -24,7 +24,7 @@ class Team(models.Model):
 class Comment(models.Model):
     comment = models.TextField(blank=False)
     commented = models.DateTimeField(auto_now_add=True)
-    who_commented = models.ForeignKey(User,
+    commentator = models.ForeignKey(User,
                                            related_name='comments',
                                            on_delete=models.CASCADE)
 
