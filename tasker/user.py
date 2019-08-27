@@ -1,14 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from . import views
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
-router = DefaultRouter()
-router.register(r'User', views.UserViewSet)
-router.register(r'Team', views.TeamViewSet)
-router.register(r'Comment', views.CommentViewSet)
-router.register(r'Task', views.TaskViewSet)
-
-urlpatterns = [
-    path('', include(router.urls))
-]
+class User(AbstractUser):
+    name = models.CharField(max_length=72)
+    created = models.DateTimeField(auto_now_add=True)
 

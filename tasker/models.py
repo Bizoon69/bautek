@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class User(AbstractUser):
     pass
+
+
 class Task(models.Model):
     name = models.CharField(max_length=500)
     creator = models.ForeignKey(User,
@@ -10,6 +13,7 @@ class Task(models.Model):
                                 on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     finished = models.DateTimeField(auto_now=True)
+
 
 class Team(models.Model):
     name = models.CharField(max_length=72)
@@ -20,6 +24,7 @@ class Team(models.Model):
     users = models.ForeignKey(User,
                               related_name='teammates',
                               on_delete=models.CASCADE)
+
 
 class Comment(models.Model):
     comment = models.TextField(blank=False)
