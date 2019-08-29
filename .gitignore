@@ -1,0 +1,13 @@
+rm --cached db.sqlite3
+db.sqlite3
+__pycache__
+rm --cached __pycache__
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
