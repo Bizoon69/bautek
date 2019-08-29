@@ -11,9 +11,11 @@ class Task(models.Model):
     creator = models.ForeignKey(User,
                                 related_name='tasks',
                                 on_delete=models.CASCADE)
+    description = models.TextField(blank=False)
     created = models.DateTimeField(auto_now_add=True)
-    finished = models.DateTimeField(auto_now=True)
-
+    teammates = models.ManyToManyField(User)
+    finished = models.DateTimeField(auto_now_add=True,
+                                    editable=True)
 
 class Team(models.Model):
     name = models.CharField(max_length=72)
@@ -21,17 +23,17 @@ class Team(models.Model):
                                 related_name='teammembers',
                                 on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    users = models.ForeignKey(User,
-                              related_name='teammates',
-                              on_delete=models.CASCADE)
+    users = models.ManyToManyField(User,
+                              related_name='teammates')
+
 
 
 class Comment(models.Model):
     comment = models.TextField(blank=False)
     commented = models.DateTimeField(auto_now_add=True)
     commentator = models.ForeignKey(User,
-                                           related_name='comments',
-                                           on_delete=models.CASCADE)
+                                        related_name='comments',
+                                        on_delete=models.CASCADE)
 
 
 
