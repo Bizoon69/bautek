@@ -5,6 +5,23 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
 
+class Team(models.Model):
+    name = models.CharField(max_length=72)
+    creator = models.ForeignKey(User,
+                                related_name='teammembers',
+                                on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    users = models.ManyToManyField(User,
+                                   related_name='teammates')
+
+
+class Comment(models.Model):
+    comment = models.TextField(blank=False)
+    commented = models.DateTimeField(auto_now_add=True)
+    commentator = models.ForeignKey(User,
+                                    related_name='comments',
+                                    on_delete=models.CASCADE)
+
 
 class Task(models.Model):
     name = models.CharField(max_length=500)
@@ -13,28 +30,10 @@ class Task(models.Model):
                                 on_delete=models.CASCADE)
     description = models.TextField(blank=False)
     created = models.DateTimeField(auto_now_add=True)
-    teammates = models.ManyToManyField(User)
+    teams = models.OneToOneField(Team,
+                              on_delete=models.CASCADE)
     finished = models.DateTimeField(auto_now_add=True,
                                     editable=True)
-
-class Team(models.Model):
-    name = models.CharField(max_length=72)
-    creator = models.ForeignKey(User,
-                                related_name='teammembers',
-                                on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-    users = models.ManyToManyField(User,
-                              related_name='teammates')
-
-
-
-class Comment(models.Model):
-    comment = models.TextField(blank=False)
-    commented = models.DateTimeField(auto_now_add=True)
-    commentator = models.ForeignKey(User,
-                                        related_name='comments',
-                                        on_delete=models.CASCADE)
-
 
 
 
