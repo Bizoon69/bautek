@@ -30,7 +30,8 @@ class Task(models.Model):
                                 on_delete=models.CASCADE)
     description = models.TextField(blank=False)
     created = models.DateTimeField(auto_now_add=True)
-    teams = models.OneToOneField(Team,
+    teams = models.ForeignKey(Team,
+                              related_name='teams',
                               on_delete=models.CASCADE)
     finished = models.DateTimeField(auto_now_add=True,
                                     editable=True)
