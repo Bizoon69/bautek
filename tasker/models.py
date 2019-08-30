@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
 
+
 class Team(models.Model):
     name = models.CharField(max_length=72)
     creator = models.ForeignKey(User,
@@ -30,9 +31,7 @@ class Task(models.Model):
                                 on_delete=models.CASCADE)
     description = models.TextField(blank=False)
     created = models.DateTimeField(auto_now_add=True)
-    teams = models.ForeignKey(Team,
-                              related_name='teams',
-                              on_delete=models.CASCADE)
+    teams = models.ManyToManyField(Team)
     finished = models.DateTimeField(auto_now_add=True,
                                     editable=True)
 
