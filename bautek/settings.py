@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'rest_auth',
     'django.contrib.sites',
     'rest_auth.registration',
+    #DryRestPermissions
+    'dry_rest_permissions',
+
 
 ]
 

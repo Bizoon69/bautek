@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from .models import User, Task, Team, Comment
 from .serializers import UserSerializer, TeamSerializer, TaskSerializer, CommentSerializer
+from dry_rest_permissions.generics import DRYPermissions
 from rest_framework import permissions
 
 
@@ -13,7 +14,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (DRYPermissions,)
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -25,7 +26,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (DRYPermissions,)
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -37,7 +38,7 @@ class TeamViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (DRYPermissions,)
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)

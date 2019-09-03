@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from dry_rest_permissions.generics import allow_staff_or_superuser, authenticated_users
 
 
 class User(AbstractUser):
@@ -23,6 +24,16 @@ class Comment(models.Model):
                                     related_name='comments',
                                     on_delete=models.CASCADE)
 
+    @staticmethod
+    def has_write_permission(request):
+        return True
+
+    def has_object_write_permission(self, request):
+        return False
+
+    def has_object_update_permission(self, request):
+        return request.user == self.commentator
+
 
 class Task(models.Model):
     name = models.CharField(max_length=500)
@@ -32,7 +43,7 @@ class Task(models.Model):
     description = models.TextField(blank=False)
     created = models.DateTimeField(auto_now_add=True)
     teams = models.ManyToManyField(Team)
-    finished = models.DateTimeField(auto_now_add=True,
+    finished = models.DateTimeField(auto_now_add=False,
                                     editable=True)
 
 
