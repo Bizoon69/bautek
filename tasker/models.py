@@ -12,9 +12,35 @@ class Team(models.Model):
     creator = models.ForeignKey(User,
                                 related_name='teammembers',
                                 on_delete=models.CASCADE)
+    @staticmethod
+    def has_read_permission(request):
+        return True
+
+    def has_object_read_permission(self, request):
+        return True
+
+    @staticmethod
+    def has_write_permission(request):
+        return False
+
+    @allow_staff_or_superuser
+    def has_write_permissions(self, request):
+        return True
+
     created = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(User,
                                    related_name='teammates')
+
+    @staticmethod
+    def has_read_permission(request):
+        return True
+
+    def has_object_read_permission(self, request):
+        return True
+
+    @allow_staff_or_superuser
+    def has_write_permissions(self, request):
+        return True
 
 
 class Comment(models.Model):
@@ -25,21 +51,40 @@ class Comment(models.Model):
                                     on_delete=models.CASCADE)
 
     @staticmethod
-    def has_write_permission(request):
+    def has_read_permission(request):
         return True
 
-    def has_object_write_permission(self, request):
+    def has_object_read_permission(self, request):
+        return True
+
+    @staticmethod
+    def has_write_permission(request):
         return False
 
-    def has_object_update_permission(self, request):
-        return request.user == self.commentator
+    @staticmethod
+    def has_create_permission(request):
+        return True
 
+    @staticmethod
+    def has_update_permission(request):
+        return True
 
 class Task(models.Model):
     name = models.CharField(max_length=500)
     creator = models.ForeignKey(User,
                                 related_name='tasks',
                                 on_delete=models.CASCADE)
+    @staticmethod
+    def has_read_permission(request):
+        return True
+
+    def has_object_read_permission(self, request):
+        return True
+
+    @allow_staff_or_superuser
+    def has_write_permission(self, request):
+        return True
+
     description = models.TextField(blank=False)
     created = models.DateTimeField(auto_now_add=True)
     teams = models.ManyToManyField(Team)
