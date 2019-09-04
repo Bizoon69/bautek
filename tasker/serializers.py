@@ -20,14 +20,14 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ('created', 'creator', 'name', 'users')
-        read_only_fields = ('id', 'created', 'creator', ) #tupla musi miec przecinek po pierwszym elemencie,inaczej jest stringiem
+        read_only_fields = ('id', 'created', 'creator',) #tupla musi miec przecinek po pierwszym elemencie,inaczej jest stringiem
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('comment', 'commentator', 'commented')
-        read_only_fields = ('id', 'commentator', 'commented',)#tupla musi miec przecinek po pierwszym elemencie,inaczej jest stringiem
+        fields = ('comment', 'creator', 'whencommented', 'whatcommented')
+        read_only_fields = ('id', 'creator', 'commented',)#tupla musi miec przecinek po pierwszym elemencie,inaczej jest stringiem
 
 
 

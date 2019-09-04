@@ -43,32 +43,6 @@ class Team(models.Model):
         return True
 
 
-class Comment(models.Model):
-    comment = models.TextField(blank=False)
-    commented = models.DateTimeField(auto_now_add=True)
-    commentator = models.ForeignKey(User,
-                                    related_name='comments',
-                                    on_delete=models.CASCADE)
-
-    @staticmethod
-    def has_read_permission(request):
-        return True
-
-    def has_object_read_permission(self, request):
-        return True
-
-    @staticmethod
-    def has_write_permission(request):
-        return False
-
-    @staticmethod
-    def has_create_permission(request):
-        return True
-
-    @staticmethod
-    def has_update_permission(request):
-        return True
-
 class Task(models.Model):
     name = models.CharField(max_length=500)
     creator = models.ForeignKey(User,
@@ -91,5 +65,30 @@ class Task(models.Model):
     finished = models.DateTimeField(auto_now_add=False,
                                     editable=True)
 
+
+class Comment(models.Model):
+    comment = models.TextField(blank=False)
+    whencommented = models.DateTimeField(auto_now_add=True)
+    whatcommented = models.ForeignKey(Task,
+                                           related_name='commentfortask',
+                                           on_delete=models.CASCADE,
+                                           null=True)
+    creator = models.ForeignKey(User,
+                                    related_name='comments',
+                                    on_delete=models.CASCADE)
+
+    @staticmethod
+    def has_read_permission(request):
+        return True
+
+    def has_object_read_permission(self, request):
+        return True
+
+    @staticmethod
+    def has_write_permission(request):
+        return True
+
+    def has_object_write_permission(self, request):
+        return request.user == self.creator
 
 
