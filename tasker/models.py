@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from dry_rest_permissions.generics import allow_staff_or_superuser, authenticated_users
+from .emails import send_feedback_email
 
 
 class User(AbstractUser):
@@ -12,6 +13,7 @@ class Team(models.Model):
     creator = models.ForeignKey(User,
                                 related_name='teammembers',
                                 on_delete=models.CASCADE)
+
     @staticmethod
     def has_read_permission(request):
         return True
@@ -48,6 +50,7 @@ class Task(models.Model):
     creator = models.ForeignKey(User,
                                 related_name='tasks',
                                 on_delete=models.CASCADE)
+
     @staticmethod
     def has_read_permission(request):
         return True
@@ -90,5 +93,15 @@ class Comment(models.Model):
 
     def has_object_write_permission(self, request):
         return request.user == self.creator
+
+
+class Feedback(models.Model):
+    email = models.EmailField(blank=False)
+    message = models.TextField(blank=False)
+
+    def send_email(self):
+        if self.send_email():
+            send_feedback_email()
+
 
 

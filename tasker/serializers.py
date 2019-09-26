@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Task, Team, Comment
+from .models import User, Task, Team, Comment, Feedback
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,6 +28,12 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('comment', 'creator', 'whencommented', 'whatcommented')
         read_only_fields = ('id', 'creator', 'commented',)#tupla musi miec przecinek po pierwszym elemencie,inaczej jest stringiem
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = ('email', 'message')
 
 
 

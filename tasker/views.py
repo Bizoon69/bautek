@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import User, Task, Team, Comment
-from .serializers import UserSerializer, TeamSerializer, TaskSerializer, CommentSerializer
+from .models import User, Task, Team, Comment, Feedback
+from .serializers import UserSerializer, TeamSerializer, TaskSerializer, CommentSerializer, FeedbackSerializer
 from dry_rest_permissions.generics import DRYPermissions
 from rest_framework import permissions
 
@@ -45,6 +45,10 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(editor=self.request.user)
+
+class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
 
 
 
